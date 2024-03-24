@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 
 const API_KEY = "bdd28d4b8aba4880a6ba243ebd2cc0d7";
-const API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+// const API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
 const BACKUP_IMG = "https://cdn-icons-png.flaticon.com/512/190/190565.png";
 
 const { width, height } = Dimensions.get("window");
@@ -38,13 +38,14 @@ const NewsItem = ({ article }) => {
 	);
 };
 
-const HomeScreen = () => {
+const HomeScreen = ({ selectedCategory = "general" }) => {
+	const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=${selectedCategory}&apiKey=${API_KEY}`;
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		fetchArticles();
-	}, []);
+	}, [selectedCategory]);
 
 	const fetchArticles = async () => {
 		try {

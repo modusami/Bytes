@@ -18,6 +18,12 @@ const Tab = createBottomTabNavigator();
 
 // Main app component
 export default function App() {
+	const [selectedCategory, setSelectedCategory] = useState("general");
+
+	const handleCategoryChange = (category) => {
+		setSelectedCategory(category.toLowerCase());
+	};
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName="SignIn">
@@ -49,8 +55,20 @@ export default function App() {
 								inactiveTintColor: "gray",
 							}}
 						>
-							<Tab.Screen name="Home" component={HomeScreen} />
-							<Tab.Screen name="Explore" component={ExploreScreen} />
+							<Tab.Screen name="Home">
+								{(props) => (
+									<HomeScreen {...props} selectedCategory={selectedCategory} />
+								)}
+							</Tab.Screen>
+							<Tab.Screen name="Explore">
+								{(props) => (
+									<ExploreScreen
+										{...props}
+										selectedCategory={selectedCategory}
+										handleClick={handleCategoryChange}
+									/>
+								)}
+							</Tab.Screen>
 							<Tab.Screen name="Profile" component={ProfileScreen} />
 						</Tab.Navigator>
 					)}

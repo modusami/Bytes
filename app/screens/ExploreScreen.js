@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
-
-const ExploreScreen = () => {
-	const [selectedCategory, setSelectedCategory] = useState("");
-
-	const handleClick = (category) => {
-		setSelectedCategory(category.toLowerCase());
-	};
+import { useNavigation } from "@react-navigation/native";
+const ExploreScreen = ({ selectedCategory, handleClick }) => {
+	const navigation = useNavigation();
 
 	return (
 		<View style={styles.container}>
@@ -91,7 +87,10 @@ const ExploreScreen = () => {
 				</TouchableOpacity>
 			</ScrollView>
 
-			<TouchableOpacity style={styles.continueButton}>
+			<TouchableOpacity
+				style={styles.continueButton}
+				onPress={() => navigation.navigate("Home", { selectedCategory })}
+			>
 				<Text style={styles.continueButtonText}>Continue</Text>
 			</TouchableOpacity>
 		</View>
