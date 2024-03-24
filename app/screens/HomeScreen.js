@@ -137,7 +137,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "OpenDyslexic3-Regular",
   },
   imgContainer: {
     height: "35%",
