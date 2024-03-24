@@ -81,6 +81,21 @@ const HomeScreen = ({ selectedCategory = "general" }) => {
 		}
 	};
 
+	const fetchSchoolArticles = async () => {
+		console.log(selectedCategory);
+		const url = `http://localhost:3000/college-news/${selectedCategory}`;
+		try {
+			const response = await axios.get(url);
+
+			console.log(response);
+			setArticles(response.data);
+			setIsLoading(false);
+		} catch (error) {
+			console.error("Error fetching articles:", error);
+			setIsLoading(false);
+		}
+	};
+
 	if (isLoading) {
 		return (
 			<View style={styles.loadingContainer}>
