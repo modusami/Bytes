@@ -1,24 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
-import Slider from "@react-native-community/slider";
 
 const ExploreScreen = () => {
-	const [selectedSchool, setSelectedSchool] = useState("");
-	const [selectedCategories, setSelectedCategories] = useState([]);
-
-	const schools = ["Select a school", "VTECH", "UVA", "JMU"];
-
-	const handleSchoolChange = (value) => {
-		setSelectedSchool(value);
-	};
+	const [selectedCategory, setSelectedCategory] = useState("");
 
 	const handleClick = (category) => {
-		console.log(category);
-		if (selectedCategories.includes(category)) {
-			setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
-		} else {
-			setSelectedCategories([...selectedCategories, category]);
-		}
+		setSelectedCategory(category.toLowerCase());
 	};
 
 	return (
@@ -33,7 +20,7 @@ const ExploreScreen = () => {
 					<TouchableOpacity
 						style={[
 							styles.category,
-							selectedCategories.includes("General") && styles.selectedCategory,
+							selectedCategory == "general" && styles.selectedCategory,
 						]}
 						onPress={() => handleClick("General")}
 					>
@@ -43,7 +30,7 @@ const ExploreScreen = () => {
 					<TouchableOpacity
 						style={[
 							styles.category,
-							selectedCategories.includes("Politics") && styles.selectedCategory,
+							selectedCategory == "politics" && styles.selectedCategory,
 						]}
 						onPress={() => handleClick("Politics")}
 					>
@@ -55,7 +42,7 @@ const ExploreScreen = () => {
 					<TouchableOpacity
 						style={[
 							styles.category,
-							selectedCategories.includes("Technology") && styles.selectedCategory,
+							selectedCategory == "technology" && styles.selectedCategory,
 						]}
 						onPress={() => handleClick("Technology")}
 					>
@@ -65,7 +52,7 @@ const ExploreScreen = () => {
 					<TouchableOpacity
 						style={[
 							styles.category,
-							selectedCategories.includes("Sports") && styles.selectedCategory,
+							selectedCategory == "sports" && styles.selectedCategory,
 						]}
 						onPress={() => handleClick("Sports")}
 					>
@@ -77,7 +64,7 @@ const ExploreScreen = () => {
 					<TouchableOpacity
 						style={[
 							styles.category,
-							selectedCategories.includes("VTECH") && styles.selectedCategory,
+							selectedCategory == "vtech" && styles.selectedCategory,
 						]}
 						onPress={() => handleClick("VTECH")}
 					>
@@ -87,7 +74,7 @@ const ExploreScreen = () => {
 					<TouchableOpacity
 						style={[
 							styles.category,
-							selectedCategories.includes("JMU") && styles.selectedCategory,
+							selectedCategory == "jmu" && styles.selectedCategory,
 						]}
 						onPress={() => handleClick("JMU")}
 					>
@@ -96,10 +83,7 @@ const ExploreScreen = () => {
 					</TouchableOpacity>
 				</View>
 				<TouchableOpacity
-					style={[
-						styles.category,
-						selectedCategories.includes("UVA") && styles.selectedCategory,
-					]}
+					style={[styles.category, selectedCategory == "uva" && styles.selectedCategory]}
 					onPress={() => handleClick("UVA")}
 				>
 					<Text style={styles.categoryIcon}>🎓</Text>
@@ -162,6 +146,9 @@ const styles = StyleSheet.create({
 	},
 	categoryText: {
 		fontSize: 18,
+	},
+	selectedCategory: {
+		backgroundColor: "gray",
 	},
 
 	continueButton: {
