@@ -56,7 +56,18 @@ const HomeScreen = ({ selectedCategory = "general" }) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		fetchArticles();
+		switch (selectedCategory) {
+			case "vtech":
+			case "jmu":
+			case "uva":
+				{
+					fetchSchoolArticles();
+				}
+				break;
+			default: {
+				fetchArticles();
+			}
+		}
 	}, [selectedCategory]);
 
 	const fetchArticles = async () => {
