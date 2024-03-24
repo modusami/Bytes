@@ -1,16 +1,31 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
+import axios from "axios";
+import { Image } from "react-native";
 
 const SignInScreen = ({ navigation }) => {
-	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [email, setEmail] = useState("");
-	const [university, setUniversity] = useState("");
+	const [err, setErr] = useState("");
 
-	const handleSignIn = () => {
-		// Perform sign-in logic here
-		navigation.navigate("Home");
+	const handleSignIn = async () => {
+		try {
+			const response = await axios.post("http://localhost:3000/api/signup", {
+				email,
+				password,
+			});
+			if (response.status === 200) {
+				navigation.navigate("Home");
+			} else if (response.status !== 200) {
+				setErr("User already exists...");
+			}
+		} catch (error) {
+			if (error.response) {
+				setErr(error.response.data.message);
+			} else {
+				setErr("Error:" + error.message);
+			}
+		}
 	};
 
 	const handleContinueWithoutSignIn = () => {
@@ -19,12 +34,13 @@ const SignInScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
+			<Image source={require("../../assets/logo.png")} style={styles.img} />
 			<Text style={styles.title}>Sign In</Text>
 			<TextInput
 				style={styles.input}
-				placeholder="Username"
-				value={username}
-				onChangeText={setUsername}
+				placeholder="Email"
+				value={email}
+				onChangeText={setEmail}
 			/>
 			<TextInput
 				style={styles.input}
@@ -33,26 +49,7 @@ const SignInScreen = ({ navigation }) => {
 				value={password}
 				onChangeText={setPassword}
 			/>
-			<TextInput
-				style={styles.input}
-				placeholder="Confirm Password"
-				secureTextEntry
-				value={passwordConfirmation}
-				onChangeText={setPasswordConfirmation}
-			/>
-			<TextInput
-				style={styles.input}
-				placeholder="Email"
-				keyboardType="email-address"
-				value={email}
-				onChangeText={setEmail}
-			/>
-			<TextInput
-				style={styles.input}
-				placeholder="University"
-				value={university}
-				onChangeText={setUniversity}
-			/>
+			<Text style={styles.err}>{err}</Text>
 			<TouchableOpacity style={styles.button} onPress={handleSignIn}>
 				<Text style={styles.buttonText}>Sign In</Text>
 			</TouchableOpacity>
@@ -69,6 +66,14 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	err: {
+		color: "red",
+	},
+	img: {
+		width: 215,
+		height: 215,
+		margin: "auto",
 	},
 	title: {
 		fontSize: 24,
