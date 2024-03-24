@@ -82,7 +82,6 @@ const HomeScreen = ({ selectedCategory = "general" }) => {
 	};
 
 	const fetchSchoolArticles = async () => {
-		console.log(selectedCategory);
 		const url = `http://localhost:3000/college-news/${selectedCategory}`;
 		try {
 			const response = await axios.get(url);
