@@ -51,6 +51,7 @@ const NewsItem = ({ article }) => {
 
 const HomeScreen = ({ selectedCategory = "general" }) => {
 	const API_URL = `https://newsapi.org/v2/top-headlines?country=us&category=${selectedCategory}&apiKey=${API_KEY}`;
+
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
