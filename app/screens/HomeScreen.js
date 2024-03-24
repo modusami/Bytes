@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { StatusBar } from "react-native";
 import {
 	StyleSheet,
 	Text,
@@ -21,35 +22,25 @@ const BACKUP_IMG = "https://cdn-icons-png.flaticon.com/512/190/190565.png";
 const { width, height } = Dimensions.get("window");
 
 const NewsItem = ({ article }) => {
-	const handlePress = () => {
-		const url = article.url; // Replace this with your URL
-		Linking.openURL(url);
-	};
-
 	const handleSpeech = () => {
-		const text = `${article.title}. ${article.descriptiont}`;
+		const text = `${article.title}. ${article.description}`;
 		Speech.speak(text);
 	};
 
 	return (
 		<View style={styles.newsItem}>
 			<View style={styles.imgContainer}>
-				<Image
-					source={{ uri: article.urlToImage ?? BACKUP_IMG }}
-					style={styles.newsImage}
-				/>
+				<TouchableOpacity onPress={() => Linking.openURL(article.url)}>
+					<Image source={{ url: article.urlToImage }} style={styles.newsImage} />
+				</TouchableOpacity>
 			</View>
 
 			<View style={styles.newsContent}>
-				<Text style={styles.newsTitle} numberOfLines={4}>
-					{article.title}
-				</Text>
-				<Text style={styles.newsDescription} numberOfLines={3}>
+				<Text style={styles.newsTitle}>{article.title}</Text>
+				<Text style={styles.newsDescription} numberOfLines={8}>
 					{article.description}
 				</Text>
-				<TouchableOpacity style={styles.readMoreButton} onPress={handlePress}>
-					<Text style={styles.readMoreButtonText}>Read More</Text>
-				</TouchableOpacity>
+
 				<TouchableOpacity style={[styles.button]} onPress={handleSpeech}>
 					<Ionicons name="ear" size={24} color="white" />
 				</TouchableOpacity>
@@ -94,7 +85,7 @@ const HomeScreen = ({ selectedCategory = "general" }) => {
 				keyExtractor={(item) => item.url}
 				showsVerticalScrollIndicator={false}
 				pagingEnabled
-				snapToInterval={height}
+				snapToInterval={height - StatusBar.currentHeight}
 				snapToAlignment="start"
 				decelerationRate="fast"
 				getItemLayout={(data, index) => ({
@@ -109,7 +100,8 @@ const HomeScreen = ({ selectedCategory = "general" }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		width: width,
+		height: height - StatusBar.currentHeight,
 		backgroundColor: "#fff",
 	},
 	loadingContainer: {
@@ -120,13 +112,14 @@ const styles = StyleSheet.create({
 	imgContainer: {
 		height: "35%",
 		width: "100%",
+		marginBottom: 10,
 	},
 	newsItem: {
-		height,
-		width,
-		backgroundColor: "#fff",
-		padding: 15,
-		marginBottom: 10,
+		width: width,
+		height: height,
+		backgroundColor: "white",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	newsImage: {
 		height: "100%",
@@ -137,6 +130,7 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 	newsContent: {
+		flex: 1,
 		padding: 20,
 	},
 	newsTitle: {
