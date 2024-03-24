@@ -69,18 +69,18 @@ app.get("/college-news/vtech", async (req, res) => {
     const newsCollection = database.collection("schoolnews");
 
     // Query the collection for news articles related to UVA, limiting the result to 5 articles
-    const uvaNewsArticles = await newsCollection
+    const vtNewsArticles = await newsCollection
       .find({ college: "VTECH" })
       .limit(5)
       .toArray();
 
-    if (uvaNewsArticles.length > 0) {
-      res.status(200).json(uvaNewsArticles);
+    if (vtNewsArticles.length > 0) {
+      res.status(200).json(vtNewsArticles);
     } else {
-      res.status(404).json({ message: "No news articles found for UVA." });
+      res.status(404).json({ message: "No news articles found for VT." });
     }
   } catch (error) {
-    console.error("Error fetching UVA college news:", error);
+    console.error("Error fetching VT college news:", error);
     res.status(500).json({ message: "Internal server error" });
   } finally {
     await client.close();
