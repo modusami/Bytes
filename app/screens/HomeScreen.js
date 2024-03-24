@@ -15,7 +15,7 @@ import axios from "axios";
 import * as Speech from "expo-speech";
 import { Ionicons } from "@expo/vector-icons";
 
-const API_KEY = "bdd28d4b8aba4880a6ba243ebd2cc0d7";
+const API_KEY = "4e632e3fae9f417e91341ad24d4ae22d";
 // const API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
 const BACKUP_IMG = "https://cdn-icons-png.flaticon.com/512/190/190565.png";
 
