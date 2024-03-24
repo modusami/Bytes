@@ -33,10 +33,20 @@ const NewsItem = ({ article }) => {
 
 	return (
 		<View style={styles.newsItem}>
-			<Image source={{ uri: article.urlToImage ?? BACKUP_IMG }} style={styles.newsImage} />
+			<View style={styles.imgContainer}>
+				<Image
+					source={{ uri: article.urlToImage ?? BACKUP_IMG }}
+					style={styles.newsImage}
+				/>
+			</View>
+
 			<View style={styles.newsContent}>
-				<Text style={styles.newsTitle}>{article.title}</Text>
-				<Text style={styles.newsDescription}>{article.description}</Text>
+				<Text style={styles.newsTitle} numberOfLines={4}>
+					{article.title}
+				</Text>
+				<Text style={styles.newsDescription} numberOfLines={3}>
+					{article.description}
+				</Text>
 				<TouchableOpacity style={styles.readMoreButton} onPress={handlePress}>
 					<Text style={styles.readMoreButtonText}>Read More</Text>
 				</TouchableOpacity>
@@ -84,6 +94,7 @@ const HomeScreen = ({ selectedCategory = "general" }) => {
 				keyExtractor={(item) => item.url}
 				showsVerticalScrollIndicator={false}
 				pagingEnabled
+				snapToInterval={height}
 				snapToAlignment="start"
 				decelerationRate="fast"
 				getItemLayout={(data, index) => ({
@@ -106,26 +117,35 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
+	imgContainer: {
+		height: "35%",
+		width: "100%",
+	},
 	newsItem: {
 		height,
 		width,
 		backgroundColor: "#fff",
+		padding: 15,
+		marginBottom: 10,
 	},
 	newsImage: {
+		height: "100%",
 		width: "100%",
-		height: height * 0.5,
 		resizeMode: "cover",
+		marginLeft: "auto",
+		marginRight: "auto",
+		borderRadius: 8,
 	},
 	newsContent: {
 		padding: 20,
 	},
 	newsTitle: {
-		fontSize: 24,
+		fontSize: 32,
 		fontWeight: "bold",
 		marginBottom: 10,
 	},
 	newsDescription: {
-		fontSize: 16,
+		fontSize: 20,
 		marginBottom: 20,
 	},
 	readMoreButton: {
