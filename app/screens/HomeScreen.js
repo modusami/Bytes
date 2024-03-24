@@ -11,6 +11,8 @@ import {
 	Linking,
 } from "react-native";
 import axios from "axios";
+import * as Speech from "expo-speech";
+import { Ionicons } from "@expo/vector-icons";
 
 const API_KEY = "bdd28d4b8aba4880a6ba243ebd2cc0d7";
 // const API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
@@ -24,6 +26,11 @@ const NewsItem = ({ article }) => {
 		Linking.openURL(url);
 	};
 
+	const handleSpeech = () => {
+		const text = `${article.title}. ${article.descriptiont}`;
+		Speech.speak(text);
+	};
+
 	return (
 		<View style={styles.newsItem}>
 			<Image source={{ uri: article.urlToImage ?? BACKUP_IMG }} style={styles.newsImage} />
@@ -32,6 +39,9 @@ const NewsItem = ({ article }) => {
 				<Text style={styles.newsDescription}>{article.description}</Text>
 				<TouchableOpacity style={styles.readMoreButton} onPress={handlePress}>
 					<Text style={styles.readMoreButtonText}>Read More</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={[styles.button]} onPress={handleSpeech}>
+					<Ionicons name="ear" size={24} color="white" />
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -128,6 +138,15 @@ const styles = StyleSheet.create({
 		color: "#fff",
 		fontSize: 16,
 		fontWeight: "bold",
+	},
+	button: {
+		padding: 8,
+		borderRadius: 999, // For rounded full shape
+		backgroundColor: "#007BFF", // Blue color
+		display: "absolute",
+		width: 42,
+		height: 42,
+		marginTop: 5,
 	},
 });
 
