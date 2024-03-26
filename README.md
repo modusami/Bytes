@@ -4,7 +4,7 @@ Bytes is a short-form news application that caters to the modern generation's de
 
 # Short Demo
 
-![-- demo --](./submission.gif)
+<img src='/submission.gif' title='Video Walkthrough' width='400' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 
